@@ -2,7 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+class Address(models.Model):
+    user = models.ForeignKey(User, verbose_name="User", on_delete=models.CASCADE)
+    locality = models.CharField(max_length=150, verbose_name="Nearest Location")
+    city = models.CharField(max_length=150, verbose_name="City")
+    state = models.CharField(max_length=150, verbose_name="State")
 
+    def __str__(self):
+        return self.locality
 
 
 class Category(models.Model):
@@ -70,5 +77,17 @@ STATUS_CHOICES = (
     ('Cancelled', 'Cancelled')
 )
 
+
+class Order(models.Model):
+    user = models.ForeignKey(User, verbose_name="User", on_delete=models.CASCADE)
+    # address = models.ForeignKey(Address, verbose_name="Shipping Address", on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, verbose_name="Product", on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(verbose_name="Quantity")
+    ordered_date = models.DateTimeField(auto_now_add=True, verbose_name="Ordered Date")
+    status = models.CharField(
+        choices=STATUS_CHOICES,
+        max_length=50,
+        default="Pending"
+        )
     
     
