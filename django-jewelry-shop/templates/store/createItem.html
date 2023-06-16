@@ -1,0 +1,156 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %} 
+{% block content %}
+<div class="container mx-auto my-5">
+  <div class="text-center">
+    <h1>Add Items</h1>
+  </div>
+  <form method="POST" action="{% url 'store:createItem' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="title" class="form-label">Product Title:</label>
+      <input
+        type="text"
+        name="title"
+        class="form-control"
+        value="{{ product.title }}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="slug" class="form-label">Product Slug</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputPassword1"
+        name="slug"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="sku" class="form-label">Product Unique ID(SKU)</label>
+      <input
+        type="text"
+        name="sku"
+        class="form-control"
+        value="{{ product.sku }}"
+        id=""
+      />
+    </div>
+    <div class="mb-3">
+      <label for="short_description" class="form-label"
+        >Short Description</label
+      >
+      <input
+        name="short_description"
+        type="text"
+        class="form-control"
+        value="{{ product.short_description }}"
+        id="exampleInputPassword1"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="detail_description" class="form-label"
+        >Detail Description</label
+      >
+      <textarea
+        class="form-control"
+        id="exampleFormControlTextarea1"
+        rows="3"
+        name="detail_description"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input
+        name="price"
+        type="number"
+        class="form-control"
+        value="{{ product.price }}"
+        id="exampleInputPassword1"
+      />
+    </div>
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        id="categoryInput"
+        placeholder="Select a category"
+        readonly
+        name="category"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary dropdown-toggle"
+          type="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        ></button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#" onclick="selectCategory('Gifts')"
+            >Gifts</a
+          >
+          <a class="dropdown-item" href="#" onclick="selectCategory('Earings')"
+            >Earings</a
+          >
+          <a
+            class="dropdown-item"
+            href="#"
+            onclick="selectCategory('Bead Necklaces')"
+            >Bead Necklaces</a
+          >
+          <a class="dropdown-item" href="#" onclick="selectCategory('Watches')"
+            >Watches</a
+          >
+          <a
+            class="dropdown-item"
+            href="#"
+            onclick="selectCategory('Bracelets')"
+            >Bracelets</a
+          >
+          <a class="dropdown-item" href="#" onclick="selectCategory('Rings')"
+            >Rings</a
+          >
+          <a
+            class="dropdown-item"
+            href="#"
+            onclick="selectCategory('Necklaces')"
+            >Necklaces</a
+          >
+        </div>
+      </div>
+    </div>
+    <input type="hidden" name="category" id="categoryValue" />
+
+    <div class="mb-3 form-check pt-3">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="exampleCheck1"
+        name="is_active"
+      />
+      <label class="form-check-label" for="exampleCheck1">isActive</label>
+    </div>
+    <div class="mb-3 form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="exampleCheck2"
+        name="is_featured"
+      />
+      <label class="form-check-label" for="is_featured">isFeatured</label>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary text-white w-25">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+<script>
+  function selectCategory(category) {
+    document.getElementById("categoryInput").value = category;
+    document.getElementById("categoryInput").disabled = true;
+    document.getElementById("categoryValue").value = category;
+  }
+</script>
+
+{% endblock content %}

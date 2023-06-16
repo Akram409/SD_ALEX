@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %} 
+{% block content %}
+
+<div class="container py-5 text-center">
+  <h1 class="mb-5">All Items</h1>
+  <table class="table">
+    <thead class="table-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Price</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ product.title }}</td>
+        <td>{{ product.category.title }}</td>
+        <td>{{ product.price }}$</td>
+        <td>
+            {% if product.sku %}
+            <a href="{% url 'store:updateItem' sku=product.sku %}">
+                <button type="button" class="btn btn-success text-white">
+                    Update Item
+                </button>
+            </a>
+        {% endif %}
+        
+        </td>
+        <td>
+          <a href="{% url 'store:deleteItem' sku=product.sku %}">
+            <button type="button" class="btn btn-danger text-white">
+              Delete Item
+            </button>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}
